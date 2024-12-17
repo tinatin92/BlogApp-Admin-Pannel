@@ -1,19 +1,22 @@
-// import { Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import { useEffect } from "react";
 import { supabase } from "./supabase";
 import type { Session } from "@supabase/supabase-js";
 import { useAtom } from "jotai";
 import { userAtom } from "./store/auth";
-// import SignUpView from './pages/sign-up/view/sign-up'
+import SignUpView from './pages/sign-up/view/sign-up'
 import LoginView from "./pages/login/view/login";
+import DefaultLayout from "./layouts/default";
+import AuthLayout from "./layouts/auth";
+import UsersView from "./pages/users/view/users";
 
 function App() {
   const [, setUser] = useAtom<Session | null>(userAtom);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
-      console.log("session:", session);
+      // console.log("session:", session);
 
       setUser(session);
     });
@@ -21,7 +24,6 @@ function App() {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
-
       setUser(session);
     });
 
@@ -29,12 +31,18 @@ function App() {
   }, [setUser]);
 
   return (
-    /*   <Routes>
-      <Route path="/" element={<DefaultLayout />}>
-        <Route path="author/:1d" element={<AuthorPage />} />
-      </Route>
-    </Routes> */
-    <LoginView />
+    <>
+      <Routes>
+        <Route path="/" element={<DefaultLayout />}>
+          {/* <Route path="author/:1d" element={<AuthorPage />} /> */}
+          <Route path="/users" element={<UsersView />} />
+        </Route>
+        <Route path="/" element={<AuthLayout />}>
+          <Route path="signup" element={<SignUpView />} />
+          <Route path="login" element={<LoginView />} />
+        </Route>
+      </Routes>
+    </>
   );
 }
 
