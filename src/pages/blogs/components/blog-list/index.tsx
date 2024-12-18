@@ -1,24 +1,25 @@
 import { useQuery } from "@tanstack/react-query";
-import { getBlogInfo } from "../../../../supabase/blogs"; 
+import { getBlogInfo } from "../../../../supabase/blogs";
 import { Button, Table } from "antd";
 import { EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import dayjs from "dayjs"; 
+import dayjs from "dayjs";
 
 const { Column } = Table;
 
 const BlogList = () => {
   const navigate = useNavigate();
 
- 
-
-  const { data: blogData, isPending, isError } = useQuery({
+  const {
+    data: blogData,
+    isPending,
+    isError,
+  } = useQuery({
     queryKey: ["blogs"],
     queryFn: getBlogInfo,
-   
   });
   console.log("Fetched blog data:", blogData);
-  
+
   if (isPending) {
     console.log("Loading...");
     return <div>Loading...</div>;
@@ -27,20 +28,14 @@ const BlogList = () => {
     console.log("error");
     return <div>error</div>;
   }
-  
 
+  const handleNavigateToBlogEdit = (id: string | number) => {
+    navigate(`/blog/edit/${id}`);
+  };
 
- /*  const handleNavigateToBlogEdit = (id: string | number) => {
-    navigate(`/blogs/edit/${id}`);
-  }; */
-
- 
-
-
-
-  const formattedData = blogData?.map((blog: any) => ({
+  const formattedData = blogData?.map((blog) => ({
     key: blog.id,
-    createdAt: dayjs(blog.created_at).format("YYYY-MM-DD HH:mm"), 
+    createdAt: dayjs(blog.created_at).format("YYYY-MM-DD HH:mm"),
     title_ka: blog.title_ka ?? "",
     title_en: blog.title_en ?? "",
     description_ka: blog.description_ka ?? "",
@@ -52,7 +47,7 @@ const BlogList = () => {
     <Table
       title={() => (
         <Button
-          onClick={() => navigate("/blogs/create")}
+          onClick={() => navigate("/blog/create")}
           icon={<PlusOutlined />}
           type="primary"
         >
@@ -61,7 +56,7 @@ const BlogList = () => {
       )}
       loading={isPending}
       bordered
-      dataSource={formattedData} 
+      dataSource={formattedData}
     >
       <Column title="Title (KA)" dataIndex="title_ka" />
       <Column title="Title (EN)" dataIndex="title_en" />
@@ -71,11 +66,11 @@ const BlogList = () => {
       {/* <Column title="Image URL" dataIndex="image_url" /> */}
       <Column
         title="Actions"
-        // render={(_, row) => {
-        //   return (
-        //     <EditOutlined onClick={() => handleNavigateToBlogEdit(row.key)} />
-        //   );
-        // }}
+        render={(_, row) => {
+          return (
+            <EditOutlined onClick={() => handleNavigateToBlogEdit(row.key)} />
+          );
+        }}
       />
     </Table>
   );

@@ -16,7 +16,7 @@ type FormInitialValues = {
   phone: string;
 };
 
-const UserCreateUpdateForm: React.FC<{
+const BlogCreateUpdateForm: React.FC<{
   initialValues: FormInitialValues;
   submitCallback: (values: FormValue) => void;
 }> = ({ submitCallback, initialValues }) => {
@@ -64,4 +64,4 @@ const UserCreateUpdateForm: React.FC<{
   );
 };
 
-export default UserCreateUpdateForm;
+export default BlogCreateUpdateForm;

@@ -1,4 +1,5 @@
-import BlogList from '../blogs-list'
+import BlogList from "../../components/blog-list"
+
 
 function BlogView() {
   return (

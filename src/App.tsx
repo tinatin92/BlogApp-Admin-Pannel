@@ -14,6 +14,9 @@ import UserCreateView from "./pages/users/view/create";
 import UserUpdateView from "./pages/users/view/update";
 import BlogView from "./pages/blogs/view/blogs-list";
 import AuthGuard from "./components/rout-guards/auth";
+import BlogUpdateView from "./pages/blogs/view/update";
+import BlogCreateView from "./pages/blogs/view/create";
+
 
 
 function App() {
@@ -44,8 +47,8 @@ function App() {
           <Route path="/user/create" element={<UserCreateView />} />
           <Route path="/users/edit/:id" element={<UserUpdateView />} />
           <Route path="/blogs" element={<BlogView />} />
-          {/* <Route path="/user/create" element={<UserCreateView />} /> */}
-          {/* <Route path="/users/edit/:id" element={<UserUpdateView />} /> */}
+          <Route path="/blog/create" element={<BlogCreateView />} />
+          <Route path="/blog/edit/:id" element={<BlogUpdateView />} />
         </Route>
         <Route path="/" element={<AuthLayout />}>
           <Route path="signup" element={<SignUpView />} />
