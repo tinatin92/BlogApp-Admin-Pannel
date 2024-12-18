@@ -3,9 +3,7 @@ import { getUsers } from "../../../../supabase/admin";
 import { Table } from "antd";
 
 
-const { Column } = Table
-
-
+const { Column } = Table;
 
 const UsersList = () => {
   const {
@@ -22,14 +20,13 @@ const UsersList = () => {
 
   console.log(usersData);
 
-  
   return (
-   <Table bordered dataSource={usersData}>
-    <Column title='Email' dataIndex='email'/>
-    <Column title='Created At' dataIndex='createdAt'/>
-    <Column title='Phone' dataIndex='phone'/>
-    <Column title='Last signed in' dataIndex='lastSignedIn'/>
-   </Table>
+    <Table bordered dataSource={usersData}>
+      <Column title="Email" dataIndex="email" />
+      <Column title="Created At" dataIndex="createdAt" />
+      <Column title="Phone" dataIndex="phone" />
+      <Column title="Last signed in" dataIndex="lastSignedIn" />
+    </Table>
   );
 };
 

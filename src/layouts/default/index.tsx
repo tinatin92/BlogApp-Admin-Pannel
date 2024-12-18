@@ -8,13 +8,21 @@ const { Header, Content, Sider } = Layout;
 const items2: MenuProps["items"] = [
   {
     key: `users`,
-
-    label: `users`,
-
+    label: `Users`,
     children: [
       {
         key: 0,
-        label: <Link to='/users'>Users</Link>,
+        label: <Link to="/users">Users</Link>,
+      },
+    ],
+  },
+  {
+    key: `blogs`,
+    label: `Blogs`,
+    children: [
+      {
+        key: 1,
+        label: <Link to="/blogs">Blogs</Link>, // Link to the blogs page
       },
     ],
   },

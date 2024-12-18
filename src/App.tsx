@@ -9,7 +9,12 @@ import SignUpView from './pages/sign-up/view/sign-up'
 import LoginView from "./pages/login/view/login";
 import DefaultLayout from "./layouts/default";
 import AuthLayout from "./layouts/auth";
-import UsersView from "./pages/users/view/users";
+import UsersView from "./pages/users/view/users-list";
+import UserCreateView from "./pages/users/view/create";
+import UserUpdateView from "./pages/users/view/update";
+import BlogView from "./pages/blogs/view/blogs-list";
+import AuthGuard from "./components/rout-guards/auth";
+
 
 function App() {
   const [, setUser] = useAtom<Session | null>(userAtom);
@@ -33,9 +38,14 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<DefaultLayout />}>
-          {/* <Route path="author/:1d" element={<AuthorPage />} /> */}
+        <Route path="/" element={<AuthGuard><DefaultLayout /></AuthGuard>}>
+         
           <Route path="/users" element={<UsersView />} />
+          <Route path="/user/create" element={<UserCreateView />} />
+          <Route path="/users/edit/:id" element={<UserUpdateView />} />
+          <Route path="/blogs" element={<BlogView />} />
+          {/* <Route path="/user/create" element={<UserCreateView />} /> */}
+          {/* <Route path="/users/edit/:id" element={<UserUpdateView />} /> */}
         </Route>
         <Route path="/" element={<AuthLayout />}>
           <Route path="signup" element={<SignUpView />} />

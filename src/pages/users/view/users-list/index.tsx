@@ -1,5 +1,5 @@
 
-import UsersList from "../../components/table"
+import UsersList from "../../components/users-list"
 
 const UsersView = () => {
   return (
