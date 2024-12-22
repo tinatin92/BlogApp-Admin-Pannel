@@ -1,24 +1,12 @@
 import { supabase } from ".."; 
-import dayjs from 'dayjs';
 
 
-export const getUsers = async (): Promise<Users[]> => {
-  const { data, error } = await supabase.auth.admin.listUsers();
 
-  if (error) {
-    throw new Error(error.message); 
-  }
-
-
-  return data.users?.map((user) => ({
-    createdAt: dayjs(user?.created_at).format("YYYY-MM-DD HH:mm"),  
-    email: user?.email, 
-    id: user?.id, 
-    phone: user?.phone,
-    lastSignedIn:user?.last_sign_in_at,
-    key: user?.id
-  }));
-};
+export const getUsers = () =>{
+  return supabase.auth.admin.listUsers().then((res) =>{
+    return res.data.users as Users[]
+  })
+}
 
 
 export const updateUser = (id: string, payload : {email:string, phone: string}) =>{
@@ -39,7 +27,7 @@ export const createUser = async (values: { email: string; phone: string }) => {
   });
 
   if (error) {
-    throw new Error(error.message); // Handle error if createUser fails
+    throw new Error(error.message); 
   }
 
   return data;
@@ -69,3 +57,5 @@ export type UserIdentity = {
   provider: string;
   provider_id: string;
 };
+
+

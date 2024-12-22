@@ -1,22 +1,20 @@
-import { useQuery } from "@tanstack/react-query";
-import { getUsers } from "../../../../supabase/admin";
+
 import { Button, Table } from "antd";
 import { EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { useGetUsers } from "../../../../react-query/query/users";
+
+import { mapUsersListFromAdmin } from "../../../../supabase/utils";
 
 const { Column } = Table;
 
 const UsersList = () => {
   const navigate = useNavigate();
 
-  const {
-    data: usersData,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["users"],
-    queryFn: getUsers,
-  });
+  
+
+  const { data: usersData, isLoading, error } = useGetUsers({queryOptions:{ select:mapUsersListFromAdmin}});
+  
 
   const handleNavigateToUsersEdit = (id: string | number) => {
     navigate(`/users/edit/${id}`);

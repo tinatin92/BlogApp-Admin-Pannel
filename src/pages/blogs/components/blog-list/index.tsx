@@ -1,23 +1,16 @@
-import { useQuery } from "@tanstack/react-query";
-import { getBlogInfo } from "../../../../supabase/blogs";
 import { Button, Table } from "antd";
 import { EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
+import { useGetBlogs } from "../../../../react-query/query/blogs";
 
 const { Column } = Table;
 
 const BlogList = () => {
   const navigate = useNavigate();
 
-  const {
-    data: blogData,
-    isPending,
-    isError,
-  } = useQuery({
-    queryKey: ["blogs"],
-    queryFn: getBlogInfo,
-  });
+  const { data: blogData, isPending, isError } = useGetBlogs();
+
   console.log("Fetched blog data:", blogData);
 
   if (isPending) {
@@ -33,15 +26,17 @@ const BlogList = () => {
     navigate(`/blog/edit/${id}`);
   };
 
-  const formattedData = blogData?.map((blog) => ({
-    key: blog.id,
-    createdAt: dayjs(blog.created_at).format("YYYY-MM-DD HH:mm"),
-    title_ka: blog.title_ka ?? "",
-    title_en: blog.title_en ?? "",
-    description_ka: blog.description_ka ?? "",
-    description_en: blog.description_en ?? "",
-    // image_url: blog.image_url ?? "",
-  }));
+  const formattedData = Array.isArray(blogData)
+    ? blogData.map((blog) => ({
+        key: blog.id,
+        createdAt: dayjs(blog.created_at).format("YYYY-MM-DD HH:mm"),
+        title_ka: blog.title_ka ?? "",
+        title_en: blog.title_en ?? "",
+        description_ka: blog.description_ka ?? "",
+        description_en: blog.description_en ?? "",
+        // image_url: blog.image_url ?? "",
+      }))
+    : [];
 
   return (
     <Table

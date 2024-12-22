@@ -1,7 +1,8 @@
 import { useParams, useNavigate } from "react-router-dom";
 import BlogCreateUpdateForm from "../../components/form/create-update";
-import { useQuery, useMutation } from "@tanstack/react-query";
-import { getSingleBlog, updateBlog } from "../../../../supabase/blogs";
+
+import { useUpdateBlogMutation } from "../../../../react-query/mutation/blogs/update";
+import { useGetSingleBlog } from "../../../../react-query/query/blogs";
 
 // import SkeletonForm from "../../components/form/create-update/skeleton";
 
@@ -11,28 +12,29 @@ type BlogValue = {
   description_ka: string;
   description_en: string;
 };
+
 const BlogUpdateView = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const mutation = useMutation({
-    mutationFn: (values: BlogValue) => updateBlog(id as string, values),
-    onSuccess: () => navigate("/blogs"),
+  const mutation = useUpdateBlogMutation({
+    queryOptions: {
+      onSuccess: () => navigate("/blogs"),
+    },
   });
 
   const handleSubmit = (values: BlogValue) => {
-    mutation.mutate(values);
-    console.log(values);
+    if (id) {
+      mutation.mutate({ id, values });
+    }
   };
 
   const {
     data: blogInitialValues,
     isPending,
     isError,
-  } = useQuery({
-    queryKey: ["blog-user", id],
-    queryFn: () => getSingleBlog(id as string),
-    enabled: !!id,
+  } = useGetSingleBlog<BlogValue>({
+    id: id as string,
   });
 
   if (isPending) {
