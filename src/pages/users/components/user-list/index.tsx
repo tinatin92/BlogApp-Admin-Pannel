@@ -18,7 +18,6 @@ const UsersList = () => {
   if (isLoading) return <div>Loading...</div>;
   if (error instanceof Error) return <div>Error: {error.message}</div>;
 
-  console.log(usersData);
 
   return (
     <Table bordered dataSource={usersData}>
