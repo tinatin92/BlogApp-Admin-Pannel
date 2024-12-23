@@ -11,7 +11,7 @@ const BlogList = () => {
 
   const { data: blogData, isPending, isError } = useGetBlogs();
 
-  console.log("Fetched blog data:", blogData);
+  // console.log("Fetched blog data:", blogData);
 
   if (isPending) {
     console.log("Loading...");
