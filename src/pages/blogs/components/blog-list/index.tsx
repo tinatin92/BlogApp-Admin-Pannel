@@ -14,11 +14,11 @@ const BlogList = () => {
   // console.log("Fetched blog data:", blogData);
 
   if (isPending) {
-    console.log("Loading...");
+   
     return <div>Loading...</div>;
   }
   if (isError) {
-    console.log("error");
+   
     return <div>error</div>;
   }
 
